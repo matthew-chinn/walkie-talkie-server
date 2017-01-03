@@ -2,6 +2,7 @@ class ProfileController < ApplicationController
     skip_before_action :verify_authenticity_token
 
     def home
+        render text: "Profile home"
     end
 
     def create
@@ -13,7 +14,7 @@ class ProfileController < ApplicationController
         else
             #give them a key and return it
             p.update_attribute(:key, p.hash)
-            render text: "#{p.hash}"
+            render text: p.as_json
         end
     end
 

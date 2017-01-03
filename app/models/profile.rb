@@ -13,7 +13,7 @@ class Profile < ActiveRecord::Base
             return ""
         end
 
-        txt = m.text
+        txt = m.as_json
         m.destroy
         return txt
      end

@@ -1,3 +1,4 @@
+=begin
 #Handle ruby authentication token, expedite POST requests
 response = `curl http://localhost:3000 --cookie-jar cookie | grep csrf`
 
@@ -13,3 +14,10 @@ cmd = "curl http://localhost:3000/#{url} --data \"#{params}&authenticity_token=#
 puts cmd
 response = `#{cmd}`
 puts "RESPONSE: #{response}"
+=end
+
+url = ARGV.first
+params = ARGV.last 
+cmd = "curl http://walkie-talkie.herokuapp.com/#{url} --data \"#{params}\""
+res = `#{cmd}`
+puts "RESPONSE: #{res}"

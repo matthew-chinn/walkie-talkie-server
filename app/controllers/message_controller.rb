@@ -7,7 +7,7 @@ class MessageController < ApplicationController
             render text: err
             return
         else
-            render text: "Message created successfully"
+            render text: m.as_json
         end
     end
 
