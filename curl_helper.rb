@@ -18,6 +18,7 @@ puts "RESPONSE: #{response}"
 
 url = ARGV.first
 params = ARGV.last 
-cmd = "curl http://walkie-talkie.herokuapp.com/#{url} --data \"#{params}\""
+#cmd = "curl http://walkie-talkie.herokuapp.com/#{url} --data \"#{params}\""
+cmd = "curl http://localhost:3000/#{url} --data \"#{params}\""
 res = `#{cmd}`
 puts "RESPONSE: #{res}"

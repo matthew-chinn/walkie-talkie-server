@@ -8,7 +8,7 @@ class ProfileController < ApplicationController
     def create
         p = Profile.create(profile_params)
         if p.errors.any?
-            err = p.errors.join(" ")
+            err = p.errors.full_messages.join(" ")
             render text: err
             return
         else
