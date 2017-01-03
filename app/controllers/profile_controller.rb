@@ -1,4 +1,6 @@
 class ProfileController < ApplicationController
+    skip_before_action :verify_authenticity_token
+
     def home
     end
 
@@ -15,21 +17,27 @@ class ProfileController < ApplicationController
         end
     end
 
+    def show
+        p = Profile.find(params[:id])
+        render text: p.as_json
+    end
+
+    def destroy
+        p = Profile.find(params[:id])
+        txt = "#{p.name} deleted\n"
+        p.delete
+        render text: txt
+    end
+
     def add_partner
         p = Profile.find(params[:id])
-        if not Profile.exists?(key: params[:partner])
-            render text: "Partner Key not valid"
-            return
-        end
-        partner = Profile.find_by(key: params[:partner])
-        p.update_attribute(:partner_id, partner.id)
-        if partner.partner_id == nil or partner.partner_id != p.id
-            render text: "Cannot send messages until partner adds you back"
-            return
-        else
-            render text: "You and your partner are now connected!"
-            return
-        end
+        res = p.add_partner(params[:partner])
+        render text: res
+    end
+
+    def pop_message
+        p = Profile.find(params[:id])
+        render p.pop_message
     end
 
     private

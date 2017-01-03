@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
     # The priority is based upon order of creation: first created -> highest priority.
     # See how all your routes lay out with "rake routes".
+    resources :profile
     root 'profile#home'
-    post 'profile/create' => 'profile#create'
-    post 'profile/:id/add-partner' => 'profile#add_partner'
+    #post 'profile/create' => 'profile#create'
+    post 'profile/:id/add-partner' => 'profile#add_partner', as: :add_partner
     post 'message/create' => 'message#create'
+    delete 'profile/:id/pop-message' => 'profile#pop_message', as: :pop_message
 
     # You can have the root of your site routed with "root"
     # root 'welcome#index'

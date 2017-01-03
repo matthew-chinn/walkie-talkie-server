@@ -1,4 +1,5 @@
 class MessageController < ApplicationController
+    skip_before_action :verify_authenticity_token
     def create
         m = Message.create(message_params)
         if m.errors.any?
