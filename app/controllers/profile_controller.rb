@@ -2,11 +2,12 @@ class ProfileController < ApplicationController
     skip_before_action :verify_authenticity_token
 
     def home
+        @partial = "home"
         if profile_signed_in?
            redirect_to profile_path(current_profile.id)
            return
         end
-        #render :partial => 'home'
+        render 'layouts/layout'
     end
 
     def create
@@ -24,7 +25,6 @@ class ProfileController < ApplicationController
 
     def show
         p = Profile.find(params[:id])
-        #render text: p.as_json
         render 'home'
     end
 

@@ -1,0 +1,20 @@
+<!-- To make layout work with extension part -->
+<div class="container">
+    <% if flash %>
+        <div class="flash">
+            <p class="success"><%= flash[:success] %><%= flash[:notice] %></p>
+            <p class="error"><%= flash[:error] %><%= flash[:alert] %></p>
+        </div>
+    <% end %>
+
+    <div class="header">
+        <% if profile_signed_in? %>
+            <%= link_to "Logout", destroy_profile_session_url, method: :delete %>
+        <% else %>
+            <%= link_to "Login", new_profile_session_url %>
+            <%= link_to "Signup", new_profile_registration_url %>
+        <% end %>
+    </div>
+
+    <%= render partial: @partial %>
+</div>

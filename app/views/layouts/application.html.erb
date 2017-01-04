@@ -7,17 +7,6 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-    <!-- wont appear in extension -->
-    <div class="header">
-        <% if profile_signed_in? %>
-            <%= link_to "Logout", destroy_profile_session_path, method: :delete %>
-        <% else %>
-            <%= link_to "Login", new_profile_session_path %>
-            <%= link_to "Signup", new_profile_registration_path %>
-        <% end %>
-    </div>
-
-<%= yield %>
-
+    <%= yield %>
 </body>
 </html>
