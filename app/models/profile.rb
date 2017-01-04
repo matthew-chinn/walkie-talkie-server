@@ -1,9 +1,13 @@
 class Profile < ActiveRecord::Base
+    # Include default devise modules. Others available are:
+    # :confirmable, :lockable, :timeoutable and :omniauthable
+    devise :database_authenticatable, :registerable,
+        :recoverable, :rememberable, :trackable, :validatable
     has_many :messages
-    validates :name, presence: true
+
     validates :email, presence: true, uniqueness: true
 
-     def remove_oldest_message
+    def remove_oldest_message
         begin
             m = Message.where(profile_id: self.id).order(:created_at).first
         rescue #if no latest message, return ""
@@ -16,9 +20,9 @@ class Profile < ActiveRecord::Base
         txt = m.as_json
         m.destroy
         return txt
-     end
+    end
 
-     def add_partner(partner_key)
+    def add_partner(partner_key)
         if not Profile.exists?(key: partner_key)
             return "Partner Key not valid"
         end
@@ -31,5 +35,5 @@ class Profile < ActiveRecord::Base
         else
             return "You and your partner are now connected!"
         end
-     end
+    end
 end
