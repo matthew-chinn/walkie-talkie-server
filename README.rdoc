@@ -3,15 +3,12 @@ TODO:
 
 Make views  (work with ajax)
 ALL VIEWS SHOULD BE SURROUNDED BY A SINGLE DIV TO WORK WITH THE EXTENSION
--add partner
 -view partner/delete
--send message
 -view latest messages sent
 -view latest message received
 
 Allow multiple message partners
 
-make corresponding google extension
-Make links trigger AJAX CALLS TO RENDER NEW PAGE 
+google extension
 -send messages
 -view key/hash in browser action button

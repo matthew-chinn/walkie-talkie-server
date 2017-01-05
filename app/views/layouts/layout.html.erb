@@ -2,7 +2,8 @@
 <div class="container">
     <% if flash %>
         <div class="flash">
-            <p class="success"><%= flash[:success] %><%= flash[:notice] %></p>
+            <p class="notice"><%= flash[:notice] %></p>
+            <p class="success"><%= flash[:success] %></p>
             <p class="error"><%= flash[:error] %><%= flash[:alert] %></p>
         </div>
     <% end %>

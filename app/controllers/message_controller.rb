@@ -4,11 +4,12 @@ class MessageController < ApplicationController
         m = Message.create(message_params)
         if m.errors.any?
             err = m.errors.join(" ")
-            render text: err
-            return
+            flash[:error] = err
         else
-            render text: m.as_json
+            flash[:success] = "Successfuly created message"
         end
+
+        redirect_to profile_url(params[:message][:sender_id])
     end
 
     private

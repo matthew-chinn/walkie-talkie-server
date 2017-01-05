@@ -11,15 +11,14 @@ class Profile < ActiveRecord::Base
         begin
             m = Message.where(profile_id: self.id).order(:created_at).first
         rescue #if no latest message, return ""
-            return ""
+            return nil
         end
         if m == nil
-            return ""
+            return nil
         end
 
-        txt = m.as_json
         m.destroy
-        return txt
+        return m
     end
 
     def add_partner(partner_key)
@@ -31,9 +30,18 @@ class Profile < ActiveRecord::Base
         self.update_attribute(:partner_id, partner.id)
 
         if partner.partner_id == nil or partner.partner_id != self.id
-            return "Cannot send messages until partner adds you back"
+            return "Connected! Cannot send messages until partner adds you back"
         else
             return "You and your partner are now connected!"
         end
+    end
+
+    def has_partner?
+        return self.partner_id ? true : false
+    end
+
+    def partner
+        p = Profile.find(self.partner_key)
+        return p
     end
 end

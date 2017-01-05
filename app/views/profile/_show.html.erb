@@ -1,0 +1,22 @@
+<div class="container">
+<p class="key">Your key: <%= @profile.key %></p>
+<% if @profile.has_partner? %>
+    <%= form_tag create_message_url, method: "post" do %>
+        <%= label_tag "message[text]", "Send a message to your partner" %>
+        <%= text_area_tag "message[text]", nil, placeholder: "Message" %>
+
+        <%= hidden_field_tag "message[sender_id]", @profile.id %>
+        <%= hidden_field_tag "message[profile_id]", @profile.partner_id %>
+        <%= submit_tag("Send", class:"btn submit") %>
+    <% end %>
+
+    <a id="get-message">View latest message</a>
+    <p style="display: none" id="id"><%=@profile.id%></p>
+    <p id="message"></p> 
+<% else %>
+    <%= form_tag add_partner_url, method: "post" do %>
+        <%= text_field_tag :partner, nil, placeholder: "Partner key" %>
+        <%= submit_tag("Add", class:"btn submit") %>
+    <% end %>
+<% end %>
+</div>

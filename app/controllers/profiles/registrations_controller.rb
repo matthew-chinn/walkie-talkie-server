@@ -1,4 +1,5 @@
 class Profiles::RegistrationsController < Devise::RegistrationsController
+    skip_before_action :verify_authenticity_token
 # before_filter :configure_sign_up_params, only: [:create]
 # before_filter :configure_account_update_params, only: [:update]
 
@@ -8,9 +9,12 @@ class Profiles::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+   def create
+     super do
+         p = Profile.find_by(email: params[:profile][:email])
+         p.update_attribute(:key, p.hash)
+     end
+   end
 
   # GET /resource/edit
   # def edit

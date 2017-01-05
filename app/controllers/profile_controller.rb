@@ -2,48 +2,42 @@ class ProfileController < ApplicationController
     skip_before_action :verify_authenticity_token
 
     def home
-        @partial = "home"
         if profile_signed_in?
            redirect_to profile_path(current_profile.id)
            return
         end
+        @partial = "home"
         render 'layouts/layout'
     end
 
-    def create
-        p = Profile.create(profile_params)
-        if p.errors.any?
-            err = p.errors.full_messages.join(" ")
-            render text: err
-            return
-        else
-            #give them a key and return it
-            p.update_attribute(:key, p.hash)
-            render text: p.as_json
-        end
-    end
-
     def show
-        p = Profile.find(params[:id])
-        render 'home'
+        @profile = Profile.find(params[:id])
+        @partial = "show"
+        render 'layouts/layout'
     end
 
     def destroy
         p = Profile.find(params[:id])
-        txt = "#{p.name} deleted\n"
         p.delete
-        render text: txt
+        redirect_to root_url
     end
 
     def add_partner
         p = Profile.find(params[:id])
         res = p.add_partner(params[:partner])
-        render text: res
+        flash[:notice] = res
+        redirect_to profile_path(p)
     end
 
-    def pop_message
+    def get_message
         p = Profile.find(params[:id])
-        render p.pop_message
+        @message = p.remove_oldest_message
+        if @message == nil
+            render text: "false"
+        else
+            puts("HELLO #{@message.text}")
+            render json: @message #for now
+        end
     end
 
     private
