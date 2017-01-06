@@ -12,6 +12,8 @@ class ProfileController < ApplicationController
 
     def show
         @profile = Profile.find(params[:id])
+        @sent_messages = Message.where(sender_id: @profile.id, 
+                                       profile_id: @profile.partner_id)
         @partial = "show"
         render 'layouts/layout'
     end
@@ -26,7 +28,13 @@ class ProfileController < ApplicationController
         p = Profile.find(params[:id])
         res = p.add_partner(params[:partner])
         flash[:notice] = res
-        redirect_to profile_path(p)
+        redirect_to profile_url(p)
+    end
+
+    def remove_partner
+        p = Profile.find(params[:id])
+        p.update_attribute(:partner_id, nil)
+        redirect_to profile_url(p)
     end
 
     def get_message
@@ -35,7 +43,6 @@ class ProfileController < ApplicationController
         if @message == nil
             render text: "false"
         else
-            puts("HELLO #{@message.text}")
             render json: @message #for now
         end
     end

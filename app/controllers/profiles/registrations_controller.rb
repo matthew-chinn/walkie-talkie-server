@@ -12,6 +12,7 @@ class Profiles::RegistrationsController < Devise::RegistrationsController
    def create
      super do
          p = Profile.find_by(email: params[:profile][:email])
+         p.update_attribute(:name, params[:profile][:name])
          p.update_attribute(:key, p.hash)
      end
    end
@@ -40,12 +41,12 @@ class Profiles::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+   protected
 
   # You can put the params you want to permit in the empty array.
-  # def configure_sign_up_params
-  #   devise_parameter_sanitizer.for(:sign_up) << :attribute
-  # end
+   def configure_sign_up_params
+     devise_parameter_sanitizer.for(:sign_up) << :name
+   end
 
   # You can put the params you want to permit in the empty array.
   # def configure_account_update_params

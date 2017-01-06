@@ -9,7 +9,8 @@ class Profile < ActiveRecord::Base
 
     def remove_oldest_message
         begin
-            m = Message.where(profile_id: self.id).order(:created_at).first
+            m = Message.where(profile_id: self.id, sender_id: self.partner_id)
+                       .order(:created_at).first
         rescue #if no latest message, return ""
             return nil
         end
@@ -41,7 +42,7 @@ class Profile < ActiveRecord::Base
     end
 
     def partner
-        p = Profile.find(self.partner_key)
+        p = Profile.find(self.partner_id)
         return p
     end
 end

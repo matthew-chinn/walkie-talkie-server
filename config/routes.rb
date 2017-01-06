@@ -8,8 +8,13 @@ Rails.application.routes.draw do
     delete 'profile/:id' => 'profile#destroy', as: :destroy_profile
 
     post 'profile/:id/add-partner' => 'profile#add_partner', as: :add_partner
+    delete 'profile/:id/partner' => 'profile#remove_partner', as: :remove_partner
     post 'message/create' => 'message#create', as: :create_message
+
+    #delete the next message and give it to recipient
     delete 'profile/:id/get-message' => 'profile#get_message', as: :get_message
+    #sender wants to delete message they already sent
+    delete 'message/:id/' => 'message#delete', as: :delete_message
 
     # You can have the root of your site routed with "root"
     # root 'welcome#index'

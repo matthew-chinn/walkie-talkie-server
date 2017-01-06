@@ -12,6 +12,12 @@ class MessageController < ApplicationController
         redirect_to profile_url(params[:message][:sender_id])
     end
 
+    def delete
+        m = Message.find(params[:id])
+        m.delete
+        redirect_to profile_url(params[:profile_id])
+    end
+
     private
     def message_params
         params.require(:message).permit(:text, :profile_id, :sender_id)

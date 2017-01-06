@@ -1,18 +1,44 @@
 <div class="container">
+<h2>Walkie Talkie</h2>
 <p class="key">Your key: <%= @profile.key %></p>
 <% if @profile.has_partner? %>
-    <%= form_tag create_message_url, method: "post" do %>
-        <%= label_tag "message[text]", "Send a message to your partner" %>
-        <%= text_area_tag "message[text]", nil, placeholder: "Message" %>
+    <% if @profile.partner.partner_id == @profile.id %>
+        <%= form_tag create_message_url, method: "post" do %>
+            <%= label_tag "message[text]", "Send a message to #{@profile.partner.name}" %>
+            <%= text_area_tag "message[text]", nil, placeholder: "Message" %>
 
-        <%= hidden_field_tag "message[sender_id]", @profile.id %>
-        <%= hidden_field_tag "message[profile_id]", @profile.partner_id %>
-        <%= submit_tag("Send", class:"btn submit") %>
+            <%= hidden_field_tag "message[sender_id]", @profile.id %>
+            <%= hidden_field_tag "message[profile_id]", @profile.partner_id %>
+            <%= submit_tag("Send", class:"btn submit") %>
+        <% end %>
+
+        <!-- display sent messages, option to delete -->
+        <% if @sent_messages.count > 0 %>
+            <h4>Sent Messages</h4>
+            <table>
+                <tr>
+                    <th>Message</th>
+                    <th>Delete</th>
+                </tr>
+                <% @sent_messages.each do |msg| %>
+                    <tr>
+                        <td><%= simple_format(msg.text) %></td>
+                        <td><%= link_to "X", delete_message_url(id: msg.id, profile_id: @profile.id), method: :delete %></td>
+                    </tr>
+                <% end %>
+            </table>
+        <% end %>
+
+        <!-- for now to test web app, take out for extension -->
+        <a id="get-message">View latest message</a>
+        <p style="display: none" id="id"><%=@profile.id%></p>
+        <p id="message"></p> 
+    <% else %>
+        <p>Waiting for your partner to add you back...</p>
     <% end %>
 
-    <a id="get-message">View latest message</a>
-    <p style="display: none" id="id"><%=@profile.id%></p>
-    <p id="message"></p> 
+    <%= link_to "Remove Partner", remove_partner_url(@profile.id), method: :delete %>
+
 <% else %>
     <%= form_tag add_partner_url, method: "post" do %>
         <%= text_field_tag :partner, nil, placeholder: "Partner key" %>
