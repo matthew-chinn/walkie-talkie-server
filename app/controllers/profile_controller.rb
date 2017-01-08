@@ -12,6 +12,11 @@ class ProfileController < ApplicationController
 
     def show
         @profile = Profile.find(params[:id])
+        if current_profile != @profile
+            flash[:error] = "You are not logged in to that profile"
+            redirect_to root_url
+            return
+        end
         @sent_messages = Message.where(sender_id: @profile.id, 
                                        profile_id: @profile.partner_id)
         @partial = "show"
