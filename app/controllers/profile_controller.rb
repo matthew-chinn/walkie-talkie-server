@@ -45,15 +45,29 @@ class ProfileController < ApplicationController
     def get_message
         p = Profile.find(params[:id])
         @message = p.remove_oldest_message
-        if @message == nil
-            render text: "false"
+        handle_msg(@message)
+    end
+
+    #compatible with extension
+    def next_message
+        if current_profile
+            @message = current_profile.remove_oldest_message
+            handle_msg(@message)
         else
-            render json: @message #for now
+            render text: "false"
         end
     end
 
     private
     def profile_params
         params.require(:profile).permit(:name, :email)
+    end
+
+    def handle_msg(msg)
+        if msg == nil
+            render text: "false"
+        else
+            render json: @message #for now
+        end
     end
 end
