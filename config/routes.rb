@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     delete 'profile/:id/get-message' => 'profile#get_message', as: :get_message
     #sender wants to delete message they already sent
     delete 'message/:id/' => 'message#delete', as: :delete_message
-    get 'next-message' => 'profile#next_message'
+    delete 'next-message' => 'profile#next_message'
 
     # You can have the root of your site routed with "root"
     # root 'welcome#index'
