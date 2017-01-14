@@ -38,7 +38,7 @@ class Profile < ActiveRecord::Base
     end
 
     def has_partner?
-        return self.partner_id ? true : false
+        return self.partner_id ? Profile.exists?(self.partner_id): false
     end
 
     def partner
