@@ -15,7 +15,7 @@ class MessageController < ApplicationController
     def delete
         m = Message.find(params[:id])
         m.delete
-        redirect_to profile_url(params[:profile_id])
+        redirect_to profile_url(params[:profile_id]), status: 303
     end
 
     private
