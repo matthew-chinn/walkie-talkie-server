@@ -3,7 +3,7 @@ class MessageController < ApplicationController
     def create
         m = Message.create(message_params)
         if m.errors.any?
-            err = m.errors.join(" ")
+            err = m.errors.full_messages.join(" ")
             flash[:error] = err
         else
             flash[:success] = "Successfuly created message"
