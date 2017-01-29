@@ -1,9 +1,6 @@
 == README
 TODO:
 
-Make views  (work with ajax)
 ALL VIEWS SHOULD BE SURROUNDED BY A SINGLE DIV TO WORK WITH THE EXTENSION
 
 Allow multiple message partners
-
-google extension
